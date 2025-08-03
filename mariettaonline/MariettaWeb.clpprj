@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="D:\My Webs\Marietta Software\mariettaonline\MariettaWeb.clpprj">
+	<settings><PM_URL><![CDATA[D:/My Webs/Marietta Software/marietta]]></PM_URL><PM_HOME_URL><![CDATA[D:/My Webs/Marietta Software/marietta]]></PM_HOME_URL><PM_LIBS><![CDATA[]]></PM_LIBS><PM_FTP_CONNECTION><![CDATA[]]></PM_FTP_CONNECTION><PM_FTP_DIR><![CDATA[]]></PM_FTP_DIR><PM_FTP_UPLOAD_ON_SAVE><![CDATA[INT:0]]></PM_FTP_UPLOAD_ON_SAVE></settings><removed value=";"/><added value=""/><dplmenupath>
+	</dplmenupath><smartyassings>
+	</smartyassings><codestructure>
+		<csfile name="D:\My Webs\Marietta Software\mariettaonline\MariettaWeb.clpprj" crc="-880222433">
+		</csfile><csfile name="D:\My Webs\Marietta Software\mariettaonline\_notes\dwsync.xml" crc="72590202">
+		</csfile><csfile name="D:\My Webs\Marietta Software\mariettaonline\song.php" crc="390995763">
+			<phptree>
+				<treenode node="_GET;Php:Var Name;3;1;8;1;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="_SERVER;Php:Var Name;17;26;25;26;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="currentline;Php:Var Name;9;54;21;54;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="currentverse;Php:Var Name;1;47;14;47;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="entry;Php:Var Name;1;22;7;22;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="file;Php:Var Name;1;28;6;28;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="headerline;Php:Var Name;1;30;12;30;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="i;Php:Var Name;1;48;3;48;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="index;Php:Var Name;1;23;7;23;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="lastline;Php:Var Name;1;49;10;49;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="lastlinetype;Php:Var Name;1;52;14;52;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="number;Php:Var Name;1;41;8;41;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="patterns;Php:Var Name;2;56;11;56;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="point;Php:Var Name;1;40;7;40;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="songfilepath;Php:Var Name;1;26;14;26;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="title;Php:Var Name;1;24;7;24;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="title2;Php:Var Name;1;42;8;42;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="titleline;Php:Var Name;1;38;11;38;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+			</phptree>
+		</csfile><csfile name="D:\My Webs\Marietta Software\mariettaonline\mobile_device_detect.php" crc="1232355118">
+			<phptree>
+				<treenode node="mobile_device_detect;Php:Function Name;0;67;1;175;34;;;v;;r;;d167,67;;b0,0;;miphone;;pipad;;pandroid;;popera;;pblackberry;;ppalm;;pwindows;;pmobileredirect;;pdesktopredirect;;p">
+				</treenode>
+			</phptree>
+		</csfile><csfile name="D:\My Webs\Marietta Software\mariettaonline\index.php" crc="860626915">
+			<phptree>
+				<treenode node="_SERVER;Php:Var Name;11;1;19;1;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="entries;Php:Var Name;0;26;8;26;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="entry;Php:Var Name;22;29;28;29;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="handle;Php:Var Name;4;28;11;28;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="mobile;Php:Var Name;1;5;8;5;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="songfilepath;Php:Var Name;0;25;13;25;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="useragent;Php:Var Name;0;1;10;1;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+			</phptree>
+		</csfile><csfile name="D:\My Webs\Marietta Software\mariettaonline\bookindex.php" crc="-411732955">
+			<phptree>
+				<treenode node="_SERVER;Php:Var Name;11;1;19;1;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="entries;Php:Var Name;0;27;8;27;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="entry;Php:Var Name;22;30;28;30;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="handle;Php:Var Name;4;29;11;29;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="index;Php:Var Name;1;43;7;43;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="mobile;Php:Var Name;1;5;8;5;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="songfilepath;Php:Var Name;0;26;13;26;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="title;Php:Var Name;1;45;7;45;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+				<treenode node="useragent;Php:Var Name;0;1;10;1;34;;;v;;r;;d-1,-1;;b0,0;;m">
+				</treenode>
+			</phptree>
+		</csfile></codestructure></project>
