@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marietta Song Finder</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1, h2, h3 { color: #333; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #f5f5f5; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .search-form { margin: 20px 0; }
+        .search-form input[type="text"] { padding: 8px; font-size: 14px; }
+        .search-form input[type="submit"] { padding: 8px 16px; font-size: 14px; }
+        .nav-links { margin: 20px 0; }
+        .nav-links a { margin-right: 15px; text-decoration: none; color: #0066cc; }
+        .nav-links a:hover { text-decoration: underline; }
+        ul { list-style-type: none; padding: 0; }
+        li { margin: 8px 0; }
+        .loading { color: #666; font-style: italic; }
+        .no-results { color: #999; font-style: italic; }
+        @media (max-width: 768px) {
+            body { margin: 10px; }
+            table { font-size: 14px; }
+            .search-form input[type="text"] { width: 100%; margin-bottom: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Marietta Song Finder</h1>
+    
+    <div class="nav-links">
+        <a href="#" onclick="showView('browse')">Browse</a> | 
+        <a href="#" onclick="showView('all')">Show All</a> | 
+        <a href="#" onclick="showView('organized')">Organized</a>
+    </div>
+    
+    <div class="search-form">
+        <form onsubmit="performSearch(event)">
+            <strong>Search:</strong>
+            <input type="text" id="search-input" size="50" placeholder="Enter song name or lyrics...">
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <div id="content">
+        <div class="loading">Loading...</div>
+    </div>
+
+    <script>
+        // Static song database (converted from the original database structure)
+        const songDatabase = [
+            // Sunday School Songs
+            { SongName: "Abide With Me", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/Abide With Me.msong" },
+            { SongName: "All Because of Calvary", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/All Because of Calvary.msong" },
+            { SongName: "All Heaven Declares", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/All Heaven Declares.msong" },
+            { SongName: "All hail the power of Jesus name", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/All hail the power of Jesus name.msong" },
+            { SongName: "Alleluia, We Shall See Him", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/Alleluia, We Shall See Him.msong" },
+            { SongName: "Altogether Lovely", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/Altogether Lovely.msong" },
+            { SongName: "Amazing Grace", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/Amazing Grace.msong" },
+            { SongName: "Anchor Your Life", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/Anchor Your Life.msong" },
+            { SongName: "And Can it Be", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/And Can it Be.msong" },
+            { SongName: "Are you Washed in the Blood", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/Are you Washed in the Blood.msong" },
+            { SongName: "Arise, O Lord", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/Arise, O Lord.msong" },
+            { SongName: "As The Deer", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/As The Deer.msong" },
+            { SongName: "As We Gather", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/As We Gather.msong" },
+            { SongName: "At the Cross", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/At the Cross.msong" },
+            { SongName: "Awesome God", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/Awesome God.msong" },
+            { SongName: "Be Thou My Vision", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/Be Thou My Vision.msong" },
+            { SongName: "BeStillMySoul", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/BeStillMySoul.msong" },
+            { SongName: "Beautiful", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/Beautiful.msong" },
+            { SongName: "Because He Lives", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/Because He Lives.msong" },
+            { SongName: "Behold What Manner of Love", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/Behold What Manner of Love.msong" },
+            { SongName: "Behold, Bless Ye the Lord", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/Behold, Bless Ye the Lord.msong" },
+            { SongName: "Beloved", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/Beloved.msong" },
+            { SongName: "Bigger Than All My Problems", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/Bigger Than All My Problems.msong" },
+            { SongName: "Blessed Assurance", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/Blessed Assurance.msong" },
+            { SongName: "Blessed Be Your Name", BookName: "Sunday School Songs", FileName: "Bookshelf/Sunday School Songs/Blessed Be Your Name.msong" },
+            
+            // Young Peoples Songs (subset for demo)
+            { SongName: "10,000 Reasons", BookName: "Young Peoples Songs", FileName: "Bookshelf/Young Peoples Songs/10,000 Reasons.msong" },
+            { SongName: "Above All", BookName: "Young Peoples Songs", FileName: "Bookshelf/Young Peoples Songs/Above All.msong" },
+            { SongName: "All Heaven Declares", BookName: "Young Peoples Songs", FileName: "Bookshelf/Young Peoples Songs/All Heaven Declares.msong" },
+            { SongName: "All I Have is Christ", BookName: "Young Peoples Songs", FileName: "Bookshelf/Young Peoples Songs/All I Have is Christ.msong" },
+            { SongName: "All to Jesus, I Surrender", BookName: "Young Peoples Songs", FileName: "Bookshelf/Young Peoples Songs/All to Jesus, I Surrender.msong" },
+            { SongName: "Amazing Grace (My Chains are Gone)", BookName: "Young Peoples Songs", FileName: "Bookshelf/Young Peoples Songs/Amazing Grace (My Chains are Gone).msong" }
+        ];
+
+        let currentView = 'browse';
+        let currentSearchTerm = '';
+
+        function showView(view) {
+            currentView = view;
+            currentSearchTerm = '';
+            document.getElementById('search-input').value = '';
+            renderContent();
+        }
+
+        function performSearch(event) {
+            event.preventDefault();
+            currentSearchTerm = document.getElementById('search-input').value.toLowerCase();
+            currentView = 'search';
+            renderContent();
+        }
+
+        function renderContent() {
+            const contentDiv = document.getElementById('content');
+            
+            switch (currentView) {
+                case 'browse':
+                    renderBrowse(contentDiv);
+                    break;
+                case 'all':
+                    renderAllSongs(contentDiv);
+                    break;
+                case 'organized':
+                    renderOrganized(contentDiv);
+                    break;
+                case 'search':
+                    renderSearchResults(contentDiv);
+                    break;
+                case 'book':
+                    renderBookSongs(contentDiv);
+                    break;
+                default:
+                    renderBrowse(contentDiv);
+            }
+        }
+
+        function renderBrowse(container) {
+            const books = [...new Set(songDatabase.map(song => song.BookName))].sort();
+            
+            let html = '<h3>Browse by Song Book</h3><ul>';
+            books.forEach(book => {
+                html += `<li><a href="#" onclick="showBook('${book}')">${book}</a></li>`;
+            });
+            html += '</ul>';
+            
+            container.innerHTML = html;
+        }
+
+        function renderAllSongs(container) {
+            renderSongTable(container, songDatabase, 'All Songs');
+        }
+
+        function renderOrganized(container) {
+            const books = [...new Set(songDatabase.map(song => song.BookName))].sort();
+            let html = '';
+            
+            books.forEach(book => {
+                const bookSongs = songDatabase.filter(song => song.BookName === book);
+                html += `<h3>${book}</h3>`;
+                html += createSongTable(bookSongs, 'organized');
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function renderSearchResults(container) {
+            if (!currentSearchTerm) {
+                container.innerHTML = '<div class="no-results">Please enter a search term</div>';
+                return;
+            }
+            
+            const results = songDatabase.filter(song => 
+                song.SongName.toLowerCase().includes(currentSearchTerm) ||
+                song.BookName.toLowerCase().includes(currentSearchTerm)
+            );
+            
+            if (results.length === 0) {
+                container.innerHTML = `<div class="no-results">No songs found for "${currentSearchTerm}"</div>`;
+                return;
+            }
+            
+            renderSongTable(container, results, `Search Results for "${currentSearchTerm}"`);
+        }
+
+        function showBook(bookName) {
+            currentView = 'book';
+            currentBook = bookName;
+            const bookSongs = songDatabase.filter(song => song.BookName === bookName);
+            renderSongTable(document.getElementById('content'), bookSongs, `Songs in ${bookName}`);
+        }
+
+        function renderSongTable(container, songs, title) {
+            container.innerHTML = `<h2>${title}</h2>` + createSongTable(songs, currentView);
+        }
+
+        function createSongTable(songs, view) {
+            if (songs.length === 0) {
+                return '<div class="no-results">No songs found</div>';
+            }
+            
+            let html = '<table><tr><th width="5%">#</th><th>Song</th>';
+            
+            if (view !== 'book' && view !== 'organized') {
+                html += '<th>Book</th>';
+            }
+            
+            html += '<th>Actions</th></tr>';
+            
+            songs.forEach((song, index) => {
+                html += '<tr>';
+                html += `<td>${index + 1}</td>`;
+                html += `<td>${song.SongName}</td>`;
+                
+                if (view !== 'book' && view !== 'organized') {
+                    html += `<td>${song.BookName}</td>`;
+                }
+                
+                const songFileName = song.FileName.split('/').pop();
+                html += `<td>
+                    <a href="../mariettaonline/song.html?name=${encodeURIComponent(songFileName)}&book=${encodeURIComponent(song.BookName)}&ref=finder">View</a> | 
+                    <a href="${song.FileName}" download>Download</a>
+                </td>`;
+                html += '</tr>';
+            });
+            
+            html += '</table>';
+            return html;
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderContent();
+        });
+    </script>
+</body>
+</html>

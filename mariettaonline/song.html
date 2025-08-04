@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marietta Online 1.4 Alpha</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h2 { color: #333; }
+        pre { font-size: 10pt; white-space: pre-wrap; }
+        .back-link { margin-bottom: 20px; }
+        .error { color: red; }
+        .loading { color: #666; }
+        hr { margin: 15px 0; border: 1px solid #ccc; }
+        @media (max-width: 768px) {
+            body { margin: 10px; font-size: 14px; }
+            pre { font-size: 9pt; }
+        }
+    </style>
+</head>
+<body>
+    <div class="back-link">
+        <a href="#" id="back-link">Index</a>
+    </div>
+    <h2 id="song-content">
+        <div class="loading">Loading song...</div>
+    </h2>
+
+    <script>
+        function getUrlParameter(name) {
+            name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+            const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+            const results = regex.exec(location.search);
+            return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+        }
+
+        async function loadSong() {
+            const songName = getUrlParameter('name');
+            const bookName = getUrlParameter('book');
+            const mobile = getUrlParameter('mobile');
+            
+            // Update back link
+            const backLink = document.getElementById('back-link');
+            backLink.href = `bookindex.html?name=${encodeURIComponent(bookName)}&mobile=${mobile}`;
+            
+            if (!songName || !bookName) {
+                document.getElementById('song-content').innerHTML = '<div class="error">Missing song or book parameter</div>';
+                return;
+            }
+
+            try {
+                const songPath = `../songfinder/Bookshelf/${encodeURIComponent(bookName)}/${encodeURIComponent(songName)}`;
+                const response = await fetch(songPath);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                
+                const songText = await response.text();
+                parseSongFile(songText, songName);
+                
+            } catch (error) {
+                console.error('Error loading song:', error);
+                document.getElementById('song-content').innerHTML = 
+                    `<div class="error">Error loading song: ${songName}<br>
+                     Make sure the song file exists in the correct location.</div>`;
+            }
+        }
+
+        function parseSongFile(content, fileName) {
+            const lines = content.split('\n');
+            
+            if (lines.length < 2) {
+                document.getElementById('song-content').innerHTML = 
+                    `<div class="error">Invalid song file: ${fileName}</div>`;
+                return;
+            }
+
+            const headerLine = lines[0];
+            if (!headerLine.includes('Song:')) {
+                document.getElementById('song-content').innerHTML = 
+                    `<div class="error">Invalid Song file: ${fileName}</div>`;
+                return;
+            }
+
+            const titleLine = lines[1];
+            const dotIndex = titleLine.indexOf('.');
+            
+            let songTitle = titleLine;
+            if (dotIndex !== -1) {
+                const number = titleLine.substring(0, dotIndex);
+                const title = titleLine.substring(dotIndex + 1).trim();
+                songTitle = number + ' ' + title;
+            }
+
+            let songContent = songTitle + '\n';
+            let preContent = '';
+            
+            for (let i = 2; i < lines.length; i++) {
+                const line = lines[i];
+                
+                // Skip metadata lines
+                if (line.match(/^(Words:|Melody:|Words and Music:|Copyright:|Source:|CCLI:)/)) {
+                    continue;
+                }
+                
+                // Handle verse markers
+                if (line.match(/^(V:|Verse:)/i)) {
+                    preContent += '<hr/>';
+                    continue;
+                }
+                
+                // Handle chorus markers
+                if (line.match(/^Chorus:/)) {
+                    preContent += '<hr/>';
+                    continue;
+                }
+                
+                preContent += line + '\n';
+            }
+
+            document.getElementById('song-content').innerHTML = 
+                songTitle + '<pre style="font-size: 10pt">' + preContent + '</pre>';
+        }
+
+        document.addEventListener('DOMContentLoaded', loadSong);
+    </script>
+</body>
+</html>
