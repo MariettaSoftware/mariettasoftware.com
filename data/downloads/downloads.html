@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downloads - Marietta Software</title>
+    <meta name="description" content="Download free Marietta music software and song collections">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        .nav-menu li a:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: white;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .breadcrumb {
+            padding: 100px 0 20px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .breadcrumb a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .breadcrumb a:hover {
+            color: white;
+        }
+
+        .page-header {
+            padding: 20px 0 40px;
+            text-align: center;
+            color: white;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeInUp 1s ease 0.3s forwards;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .downloads-section {
+            padding: 40px 0;
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .downloads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .download-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .download-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .download-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .version-badge {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .download-card p {
+            margin-bottom: 1rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .download-card ul {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+            opacity: 0.8;
+        }
+
+        .download-card li {
+            margin-bottom: 0.5rem;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #4834d4, #686de0);
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(72, 52, 212, 0.3);
+        }
+
+        .registration-code {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid #ff6b6b;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .registration-code strong {
+            color: #ff6b6b;
+        }
+
+        .song-collections {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 40px 0;
+            border-radius: 20px;
+            margin: 40px 0;
+        }
+
+        .legacy-versions {
+            opacity: 0.7;
+            background: rgba(0, 0, 0, 0.1);
+            padding: 30px 0;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+
+        .legacy-versions h2 {
+            opacity: 0.8;
+        }
+
+        .legacy-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: rgba(0, 0, 0, 0.9);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                padding: 2rem 0;
+                gap: 0;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-menu li {
+                margin: 1rem 0;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .downloads-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="container">
+            <a href="../../index.html" class="logo">Marietta Software</a>
+            <ul class="nav-menu">
+                <li><a href="../../index.html">Home</a></li>
+                <li><a href="#latest">Latest</a></li>
+                <li><a href="#songs">Songs</a></li>
+                <li><a href="#legacy">Legacy</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="../../index.html">Home</a> / Downloads
+            </div>
+
+            <div class="page-header">
+                <h1>Downloads</h1>
+                <p>Get the latest versions of Marietta software and song collections</p>
+            </div>
+
+            <section id="latest" class="downloads-section">
+                <h2 class="section-title">Latest Releases</h2>
+                <p class="section-subtitle">Our most recent and stable versions with the latest features</p>
+                
+                <div class="downloads-grid">
+                    <div class="download-card">
+                        <h3>Marietta <span class="version-badge">v1.3.5</span></h3>
+                        <p><strong>Latest Version</strong> - Added Margin and Spacing settings for enhanced layout control.</p>
+                        <div class="registration-code">
+                            <strong>Registration Code:</strong><br>
+                            97EF0017-221C-2731-DB0A-09D380C0A250
+                        </div>
+                        <a href="/mariettasoftware/data/downloads/MariettaSetup-1.3.5.msi" class="download-btn">Download v1.3.5</a>
+                    </div>
+
+                    <div class="download-card">
+                        <h3>Marietta <span class="version-badge">v1.3.4</span></h3>
+                        <p><strong>Bug Fix Release</strong> - Fixes critical bugs found in version 1.3.3. Recommended for all users.</p>
+                        <a href="/mariettasoftware/data/downloads/MariettaSetup-1.3.4.msi" class="download-btn">Download v1.3.4</a>
+                    </div>
+
+                    <div class="download-card">
+                        <h3>Marietta <span class="version-badge">v1.3.3</span></h3>
+                        <p><strong>60-day Trial</strong> - Fixed startup bug and first install issues with creating new songs.</p>
+                        <ul>
+                            <li><strong>Known Issues:</strong></li>
+                            <li>Import Song Book bug - Operation will fail but won't crash</li>
+                            <li>Save SongList - Does not save the song list</li>
+                            <li>Open SongList - May crash Marietta</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="downloads-section">
+                <h2 class="section-title">Stable Versions</h2>
+                <p class="section-subtitle">Proven stable releases for production use</p>
+                
+                <div class="downloads-grid">
+                    <div class="download-card">
+                        <h3>Marietta <span class="version-badge">v1.2.4</span></h3>
+                        <p><strong>30-day Trial</strong> - Stable release with core functionality.</p>
+                        <a href="/mariettasoftware/data/downloads/MariettaSetup-1.2.4.msi" class="download-btn">Download v1.2.4</a>
+                    </div>
+
+                    <div class="download-card">
+                        <h3>Marietta <span class="version-badge">v1.2.2</span></h3>
+                        <p><strong>30-day Trial</strong> - Reliable version for most users.</p>
+                        <a href="/mariettasoftware/data/downloads/MariettaSetup-1.2.2.msi" class="download-btn">Download v1.2.2</a>
+                    </div>
+
+                    <div class="download-card">
+                        <h3>Marietta <span class="version-badge">v1.2.1</span></h3>
+                        <p><strong>30-day Trial</strong> - Works better with Windows XP, Vista, and Windows 7.</p>
+                        <a href="/mariettasoftware/data/downloads/MariettaSetup-1.2.1.msi" class="download-btn">Download v1.2.1</a>
+                    </div>
+                </div>
+            </section>
+
+            <section id="songs" class="song-collections">
+                <div class="container">
+                    <h2 class="section-title">Songs and Music</h2>
+                    <p class="section-subtitle">Song collections and sheet music for use with Marietta</p>
+                    
+                    <div class="downloads-grid">
+                        <div class="download-card">
+                            <h3>Sunday School Songs</h3>
+                            <p><strong>Marietta Format</strong> - Included with all installations.</p>
+                        </div>
+
+                        <div class="download-card">
+                            <h3>Young People's Songs</h3>
+                            <p><strong>Marietta Format</strong> - Additional song collection for youth programs.</p>
+                            <a href="/mariettasoftware/data/downloads/Young People's Songs.msongbookx" class="download-btn">Download Collection</a>
+                        </div>
+
+                        <div class="download-card">
+                            <h3>Sunday School Sheet Music</h3>
+                            <p><strong>JPEG Scans</strong> - High-quality sheet music scans for printing.</p>
+                            <a href="/mariettasoftware/data/downloads/Sunday School Songs Sheet Music.zip" class="download-btn">Download ZIP</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="legacy" class="legacy-versions">
+                <div class="container">
+                    <h2 class="section-title">Previous Releases</h2>
+                    <p class="section-subtitle">Historical versions - for reference only</p>
+                    
+                    <div class="legacy-item">Marietta: Release Candidate 4 (RC4) - Expired March 31, 2009</div>
+                    <div class="legacy-item">Marietta: Release Candidate 3C (RC3C)</div>
+                    <div class="legacy-item">Marietta: Release Candidate 3 (RC3)</div>
+                    <div class="legacy-item">Marietta: Professional Edition (RC2D)</div>
+                    <div class="legacy-item">Marietta: Professional Edition (RC2C)</div>
+                    <div class="legacy-item">Marietta: Professional Edition (RC2B)</div>
+                    <div class="legacy-item">Marietta: Limited Edition for Windows 98 - Discontinued</div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-menu a').forEach(n => n.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        }));
+
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(0, 0, 0, 0.9)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.1)';
+            }
+        });
+    </script>
+</body>
+</html>
